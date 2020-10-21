@@ -113,8 +113,8 @@ public class CheckInput {
 	 */
 	public static String getString() {
 		Scanner in = new Scanner( System.in );
-		String input = in.nextLine();
-		return input;
+		String info = in.nextLine();
+		return info;
 	}
 
 	public static String getDate() {
@@ -125,9 +125,28 @@ public class CheckInput {
 			input = in.nextLine();
 			if (input.length() == 8 && input.charAt(2) == '/' && input.charAt(5) == '/') {
 				valid = true;
+				for (int x = 0; x < input.length(); x++) {
+					if (input.charAt(x) != '/') {
+						try {
+							Integer.parseInt(input.substring(x, x+1));
+						} catch (NumberFormatException e) {
+							valid = false;
+							System.out.println("Number is not a valid integer!");
+							break;
+						}
+					}
+				}
 			}
 			else {
 				System.out.println("Enter the date in the specified format");
+			}
+			if (Integer.parseInt(input.substring(0, 2)) < 1 || Integer.parseInt(input.substring(0, 2)) > 12) {
+				valid = false;
+				System.out.println("Number is not in valid month range!");
+			}
+			else if (Integer.parseInt(input.substring(3, 5)) < 1 || Integer.parseInt(input.substring(3, 5)) > 31) {
+				valid = false;
+				System.out.println("Number is not in valid day range!");
 			}
 		}
 		return input;
